@@ -1,11 +1,12 @@
 package quotes;
 
 public class Quote {
-     String quote;
+     String text;
      String author;
 
-    public Quote(String quote, String author) {
-        this.quote = quote;
+    public Quote(String text, String author) {
+        this.text = text;
         this.author = author;
     }
 }
+

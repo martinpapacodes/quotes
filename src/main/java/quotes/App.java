@@ -7,56 +7,30 @@ import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.Scanner;
-import com.google.common.reflect.TypeToken;
 
-import javax.lang.model.SourceVersion;
 
 public class App {
 
     public static void main(String[] args) {
         Gson gson = new Gson();
-
-        String userJson = "[{'quote': 'Alex','id': 1}, "
-                + "{'name': 'Brian','id':2}, "
-                + "{'name': 'Charles','id': 3}]";
+        int randomNumber = (int)(Math.random()*(138 + 1 ));
 
         String jsonPath = "src/main/resources/recentquotes.json";
-        //            Scanner scanner = new Scanner(new File(jsonPath));
-        //            String firstLine = scanner.nextLine();
-        //
-        //            Quote quote = gson.fromJson(firstLine[0], Quote.class);
-        //            System.out.println(quote.quote);
+        try {
+            Scanner scanner = new Scanner(new File(jsonPath));
+            String firstLine ="";
 
-        Type quoteListType = new TypeToken<ArrayList<Quote>>() {}.getType();
-        ArrayList<Quote> quoteArray = gson.fromJson(jsonPath, quoteListType);
+            while(scanner.hasNext()) {
+                firstLine += scanner.nextLine();
+            }
+            Quote[] quoteArray = gson.fromJson(firstLine, Quote[].class);
 
-//        System.out.println("quoteArray = " + quoteArray);
+            System.out.println("Quotes: " + quoteArray[randomNumber].text);
+            System.out.println("Author: " + quoteArray[randomNumber].author);
 
-        for (Quote quote : quoteArray) {
-            System.out.println("quote = " + quote);
-//        }
-
-//        try {
-//            Scanner scanner = new Scanner(new File(path));
-//            String firstLine = scanner.nextLine();
-//
-//            // gson and many other parsing type libraries require knowledge about the class, but not the class itself
-//            Cat snowdrop = gson.fromJson(firstLine, Cat.class);
-//            System.out.println(snowdrop.name);
-//            snowdrop.sneak();
-//
-//            // jabawwockees, badgers, tigers
-//            Jabberwookie snowMonster = gson.fromJson(firstLine, Jabberwookie.class);
-//            System.out.println("snowMonster = " + snowMonster);
-//
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-
-
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
-}
+    }
