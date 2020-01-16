@@ -13,8 +13,13 @@ import java.util.Scanner;
 public class App {
 
     public static void main(String[] args) {
+        System.out.println(getRandomQuote());;
+    }
+
+    public static String getRandomQuote() {
         Gson gson = new Gson();
         int randomNumber = (int)(Math.random()*(138 + 1 ));
+        String result = "";
 
         String jsonPath = "src/main/resources/recentquotes.json";
         try {
@@ -26,11 +31,14 @@ public class App {
             }
             Quote[] quoteArray = gson.fromJson(firstLine, Quote[].class);
 
-            System.out.println("Quotes: " + quoteArray[randomNumber].text);
-            System.out.println("Author: " + quoteArray[randomNumber].author);
+            result = String.format("Here is a quote for you: %s by %s.", quoteArray[randomNumber].text, quoteArray[randomNumber].author);
+//            System.out.println("Quotes: " + quoteArray[randomNumber].text);
+//            System.out.println("Author: " + quoteArray[randomNumber].author);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-    }
+        return result;
+        }
+
     }
